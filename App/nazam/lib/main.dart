@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Directionality(
+      home: const Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(body: MyHomePage(title: 'الصفحة الرئسية'))),
     );
