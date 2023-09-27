@@ -12,13 +12,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const Nazem(),
+      home: const Nazemm(),
     );
   }
 }
 
-class Nazem extends StatelessWidget {
-const Nazem({super.key});
+class Nazemm extends StatelessWidget {
+const Nazemm({super.key});
 
   @override
   Widget build(BuildContext context) {
