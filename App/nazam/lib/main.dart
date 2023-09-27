@@ -11,22 +11,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'نظّم',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Directionality(
-          textDirection: TextDirection.rtl,
-          child: Scaffold(body: MyHomePage(title: 'الصفحة الرئسية'))),
-    );
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage());
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -35,12 +28,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+    return MaterialApp(
+      color: Colors.black,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Nazam'),
+          centerTitle: true,
+          backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+        ),
       ),
-      body: Center(),
     );
   }
 }
