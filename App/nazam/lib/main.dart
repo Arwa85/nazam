@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage());
+        home: const MyHomePage());
   }
 }
 
@@ -30,11 +30,57 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       color: Colors.black,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Nazam'),
-          centerTitle: true,
-          backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+      home: SafeArea(
+        child: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            body: Stack(children: <Widget>[
+              TabBarView(
+                children: [
+                  Container(
+                    color: Colors.white,
+                  ),
+                  Container(
+                    color: Colors.black,
+                  ),
+                  Container(
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              Container(
+                height: 20,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  ),
+                  color: Color.fromRGBO(238, 235, 235, 1),
+                ),
+              )
+            ]),
+            appBar: AppBar(
+                elevation: 0,
+                backgroundColor: const Color.fromRGBO(238, 235, 235, 1),
+                title: const TabBar(
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.account_circle),
+                    ),
+                    Tab(
+                      icon: Icon(Icons.home),
+                    ),
+                    Tab(
+                      icon: Icon(Icons.list),
+                    ),
+                  ],
+                  labelColor: Color.fromRGBO(43, 101, 109, 1),
+                  unselectedLabelColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorPadding: EdgeInsets.all(8.0),
+                )),
+            backgroundColor: const Color.fromRGBO(238, 235, 235, 1),
+          ),
         ),
       ),
     );
