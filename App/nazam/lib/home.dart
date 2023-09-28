@@ -71,7 +71,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Tab(
-                      icon: AssetImage('assetName'), //Icon(Icons.home)
+                      icon: Image(
+                        image: AssetImage('images/logo.png'),
+                        height: 400,
+                        width: 300,
+                      ),
                     ),
                     Tab(
                       icon: Icon(
