@@ -104,7 +104,7 @@ class _LoginState extends State<Login> {
                             labelText: 'Password',
                             prefixIcon: Icon(
                               Icons.key,
-                              color: Colors.green,
+                              color: const Color.fromARGB(255, 59, 152, 63),
                             ),
                             errorStyle: TextStyle(fontSize: 18.0),
                             border: OutlineInputBorder(
