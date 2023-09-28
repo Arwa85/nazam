@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nazam/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,14 +13,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
-      home: Splash(),
+      home: const Splash(),
     );
   }
 }
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +30,13 @@ class LoginPage extends StatelessWidget {
         title: Text('Login Page'),
       ),
       body: Center(
-        child: Text('Login Page Content'),
-      ),
+          child: ElevatedButton(
+        child: Text('Login'),
+        onPressed: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        },
+      )),
     );
   }
 }
