@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nazam/home.dart';
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 void main() {
@@ -32,7 +29,6 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-
 class _LoginState extends State<Login> {
   Map userData = {};
   final _formkey = GlobalKey<FormState>();
@@ -55,7 +51,8 @@ class _LoginState extends State<Login> {
                   height: 120,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
+                    border:
+                        Border.all(color: Color.fromARGB(255, 255, 255, 255)),
                   ),
                   child: Image.asset('images/logo.png'),
                 ),
@@ -75,7 +72,8 @@ class _LoginState extends State<Login> {
                         child: TextFormField(
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Enter email address'),
-                            EmailValidator(errorText: 'Please enter a valid email'),
+                            EmailValidator(
+                                errorText: 'Please enter a valid email'),
                           ]),
                           decoration: InputDecoration(
                             hintText: 'ادخل البريد الإلكتروني',
@@ -87,7 +85,8 @@ class _LoginState extends State<Login> {
                             errorStyle: TextStyle(fontSize: 18.0),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.all(Radius.circular(9.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(9.0)),
                             ),
                           ),
                         ),
@@ -96,9 +95,14 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
                           validator: MultiValidator([
-                            RequiredValidator(errorText: 'Please enter Password'),
-                            MinLengthValidator(8, errorText: 'Password must be at least 8 characters'),
-                            PatternValidator(r'(?=.*?[#!@$%^&*-])', errorText: 'Password must contain at least one special character'),
+                            RequiredValidator(
+                                errorText: 'Please enter Password'),
+                            MinLengthValidator(8,
+                                errorText:
+                                    'Password must be at least 8 characters'),
+                            PatternValidator(r'(?=.*?[#!@$%^&*-])',
+                                errorText:
+                                    'Password must contain at least one special character'),
                           ]),
                           decoration: InputDecoration(
                             hintText: 'Password',
@@ -110,7 +114,8 @@ class _LoginState extends State<Login> {
                             errorStyle: TextStyle(fontSize: 18.0),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.all(Radius.circular(9.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(9.0)),
                             ),
                           ),
                         ),
@@ -146,8 +151,6 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                     
-                      
                     ],
                   ),
                 ),
