@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:nazam/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Splash(),
+      home: HomePage(),
     );
   }
 }
@@ -32,6 +33,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   Map userData = {};
   final _formkey = GlobalKey<FormState>();
+  void navigateToHome() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +58,15 @@ class _LoginState extends State<Login> {
                   height: 120,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    border:
-                        Border.all(color: Color.fromARGB(255, 255, 255, 255)),
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 255, 255, 255)),
                   ),
                   child: Image.asset('images/logo.png'),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Form(
@@ -75,7 +82,7 @@ class _LoginState extends State<Login> {
                             EmailValidator(
                                 errorText: 'Please enter a valid email'),
                           ]),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'ادخل البريد الإلكتروني',
                             labelText: 'البريد الإكتروني',
                             prefixIcon: Icon(
@@ -104,7 +111,7 @@ class _LoginState extends State<Login> {
                                 errorText:
                                     'Password must contain at least one special character'),
                           ]),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Password',
                             labelText: 'Password',
                             prefixIcon: Icon(
@@ -121,18 +128,18 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(180, 0, 0, 0),
-                        child: Text('Forget Password!'),
+                        margin: const EdgeInsets.fromLTRB(180, 0, 0, 0),
+                        child: const Text('Forget Password!'),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(28.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {
-                                print('form submitted');
+                                navigateToHome();
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -141,7 +148,7 @@ class _LoginState extends State<Login> {
                               ),
                               primary: Colors.blue,
                             ),
-                            child: Text(
+                            child: const Text(
                               'Login',
                               style: TextStyle(
                                 color: Colors.white,

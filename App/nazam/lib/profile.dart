@@ -58,17 +58,23 @@ class Profile extends StatelessWidget {
                     BuildContext context,
                   ) {
                     return [
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'option1',
-                        child: Text('Option 1'),
+                        child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Text('الابلاغ عن حادثة')),
                       ),
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'option2',
-                        child: Text('Option 2'),
+                        child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Text('عرض الحوادث')),
                       ),
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'option3',
-                        child: Text('Option 3'),
+                        child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Text('الاعدادات')),
                       ),
                     ];
                   },
@@ -84,13 +90,14 @@ class Profile extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(0),
               child: Column(
                 children: [
                   SizedBox(height: 40),
                   CircleAvatar(
+                    backgroundColor: Colors.black,
                     radius: 70,
-                    backgroundImage: AssetImage('images/logo.png'),
+                    // backgroundImage: AssetImage('images/logo.png'),
                   ),
                   SizedBox(height: 20),
                   ListTile(
@@ -133,16 +140,6 @@ class Profile extends StatelessWidget {
                     title: Text('العنوان'),
                     subtitle: Text('شارع الملك فهد'),
                     leading: Icon(CupertinoIcons.location),
-                    tileColor: Colors.white,
-                  ),
-                  ListTile(
-                    title: Text('القسم'),
-                    subtitle: Text('الموارد البشرية'),
-                    leading: Icon(CupertinoIcons.folder),
-                    trailing: Icon(
-                      Icons.arrow_forward,
-                      color: Colors.grey,
-                    ),
                     tileColor: Colors.white,
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nazam/profile.dart';
+import 'package:nazam/viewIncident.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -57,28 +58,72 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                   PopupMenuButton<String>(
+                    position: PopupMenuPosition.under,
+                    elevation: 8.0,
                     icon: const Icon(Icons.menu,
                         size: 50.0, color: Color.fromRGBO(43, 101, 109, 1)),
                     itemBuilder: (
                       BuildContext context,
                     ) {
+                      TextDirection.rtl;
                       return [
-                        const PopupMenuItem<String>(
+                        PopupMenuItem<String>(
                           value: 'option1',
-                          child: Text('Option 1'),
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Text(
+                              ('الابلاغ عن حادثة'),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         ),
-                        const PopupMenuItem<String>(
+                        PopupMenuItem<String>(
                           value: 'option2',
-                          child: Text('Option 2'),
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Text(
+                              ('عرض الحوادث'),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         ),
-                        const PopupMenuItem<String>(
+                        PopupMenuItem<String>(
                           value: 'option3',
-                          child: Text('Option 3'),
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Text(
+                              ('الاعدادات'),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         ),
                       ];
                     },
                     onSelected: (String value) {
                       // Handle menu item selection
+                      if (value == 'option1') {
+                      } else if (value == 'option2') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewIncidentPage()),
+                        );
+                      } else if (value == 'option3') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewIncidentPage()),
+                        );
+                      }
                     },
                   ),
                 ],
