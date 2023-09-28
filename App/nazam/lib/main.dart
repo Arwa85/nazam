@@ -75,49 +75,52 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    
+
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  LoginPage()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
       );
     });
   }
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image(
-            image: AssetImage('images/logo.png'),
-            height: 400,
-            width: 300,
-          ),
-          Text(
-            "مرحبا بك في نظّم",
-            style: TextStyle(
-              fontSize: 40,
-              fontFamily: 'Marhey',
-              height: 1,
-              color: Color.fromARGB(255, 146, 88, 0),
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage('images/logo.png'),
+              height: 400,
+              width: 300,
             ),
-          ),
-          const SizedBox(height: 130),
-          const CircularProgressIndicator(
-            color: Colors.blue,
-          ),
-          Container(
-            width: 500,  // Width of the rectangle
-            height: 100, // Height of the rectangle
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 3, 45, 42), // Color of the rectangle
-              borderRadius: BorderRadius.circular(10), // Border radius to give rounded corners, if desired
+            Text(
+              "مرحبا بك في نظّم",
+              style: TextStyle(
+                fontSize: 40,
+                fontFamily: 'Marhey',
+                height: 1,
+                color: Color.fromARGB(255, 146, 88, 0),
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 130),
+            const CircularProgressIndicator(
+              color: Colors.blue,
+            ),
+            Container(
+              width: 500, // Width of the rectangle
+              height: 100, // Height of the rectangle
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 3, 45, 42), // Color of the rectangle
+                borderRadius: BorderRadius.circular(
+                    10), // Border radius to give rounded corners, if desired
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}}
+    );
+  }
+}
