@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.grey,
         ),
         home: const MyHomePage());
   }
@@ -65,13 +65,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: const TabBar(
                   tabs: [
                     Tab(
-                      icon: Icon(Icons.account_circle),
+                      icon: Icon(
+                        Icons.account_circle,
+                        size: 40.0,
+                      ),
                     ),
                     Tab(
-                      icon: Icon(Icons.home),
+                      icon: AssetImage('assetName'), //Icon(Icons.home)
                     ),
                     Tab(
-                      icon: Icon(Icons.list),
+                      icon: Icon(
+                        Icons.menu,
+                        size: 40.0,
+                      ),
                     ),
                   ],
                   labelColor: Color.fromRGBO(43, 101, 109, 1),
