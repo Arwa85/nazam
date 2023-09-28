@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nazam/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,67 +13,77 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       color: Colors.black,
-      home: SafeArea(
-        child: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-            body: Stack(children: <Widget>[
-              TabBarView(
-                children: [
-                  Container(
-                    color: Colors.white,
+      home: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: const Color.fromRGBO(238, 235, 235, 1),
+          centerTitle: true,
+          actions: [
+            Expanded(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.account_circle,
+                    size: 40.0,
+                    color: Color.fromRGBO(43, 101, 109, 1),
                   ),
-                  Container(
-                    color: Colors.black,
-                  ),
-                  Container(
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-              Container(
-                height: 20,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
-                  ),
-                  color: Color.fromRGBO(238, 235, 235, 1),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => profile(),
+                      ),
+                    );
+                  },
                 ),
-              )
-            ]),
-            appBar: AppBar(
-                elevation: 0,
-                backgroundColor: const Color.fromRGBO(238, 235, 235, 1),
-                title: const TabBar(
-                  tabs: [
-                    Tab(
-                      icon: Icon(
-                        Icons.account_circle,
-                        size: 40.0,
+                IconButton(
+                  icon: const Image(
+                    image: AssetImage('images/logo.png'),
+                    height: 120,
+                    width: 120,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
                       ),
-                    ),
-                    Tab(
-                      icon: Image(
-                        image: AssetImage('images/logo.png'),
-                        height: 400,
-                        width: 300,
+                    );
+                  },
+                ),
+                PopupMenuButton<String>(
+                  icon: const Icon(Icons.menu,
+                      size: 40.0, color: Color.fromRGBO(43, 101, 109, 1)),
+                  itemBuilder: (
+                    BuildContext context,
+                  ) {
+                    return [
+                      const PopupMenuItem<String>(
+                        value: 'option1',
+                        child: Text('Option 1'),
                       ),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.menu,
-                        size: 40.0,
+                      const PopupMenuItem<String>(
+                        value: 'option2',
+                        child: Text('Option 2'),
                       ),
-                    ),
-                  ],
-                  labelColor: Color.fromRGBO(43, 101, 109, 1),
-                  unselectedLabelColor: Colors.black,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicatorPadding: EdgeInsets.all(8.0),
-                )),
-            backgroundColor: const Color.fromRGBO(238, 235, 235, 1),
-          ),
+                      const PopupMenuItem<String>(
+                        value: 'option3',
+                        child: Text('Option 3'),
+                      ),
+                    ];
+                  },
+                  onSelected: (String value) {
+                    // Handle menu item selection
+                  },
+                ),
+              ],
+            )),
+          ],
+        ),
+        body: const Center(
+          child: Text('Welcome to the App'),
         ),
       ),
     );
