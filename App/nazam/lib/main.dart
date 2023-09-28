@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nazam/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.grey,
         ),
-        home: Splash());
+        home: const Splash());
   }
 }
 
