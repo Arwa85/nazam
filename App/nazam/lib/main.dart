@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:nazam/home.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  //Initialize Firebase:
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -45,8 +47,9 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text('تسجيل الدخول'),
-          backgroundColor: Color.fromARGB(173, 14, 54, 46), // Set the desired color here
-        
+        backgroundColor:
+            Color.fromARGB(173, 14, 54, 46), // Set the desired color here
+
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -104,9 +107,14 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
                           validator: MultiValidator([
-                            RequiredValidator(errorText: 'Please enter Password'),
-                            MinLengthValidator(8, errorText: 'Password must be at least 8 characters'),
-                            PatternValidator(r'(?=.*?[#!@$%^&*-])', errorText: 'Password must contain at least one special character'),
+                            RequiredValidator(
+                                errorText: 'Please enter Password'),
+                            MinLengthValidator(8,
+                                errorText:
+                                    'Password must be at least 8 characters'),
+                            PatternValidator(r'(?=.*?[#!@$%^&*-])',
+                                errorText:
+                                    'Password must contain at least one special character'),
                           ]),
                           decoration: InputDecoration(
                             hintText: 'Password',
@@ -187,39 +195,38 @@ class _SplashState extends State<Splash> {
     });
   }
 
- @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image(
-            image: AssetImage('images/logo.png'),
-            height: 250,
-            width: 200,
-          ),
-          Text(
-            "مرحبا بك في نظّم",
-            style: TextStyle(
-              fontSize: 40,
-              fontFamily: 'Marhey',
-              height: 1,
-              color: Color.fromARGB(255, 146, 88, 0),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage('images/logo.png'),
+              height: 250,
+              width: 200,
             ),
-          ),
-          const SizedBox(height: 130),
-          const CircularProgressIndicator(
-            color: Colors.blue,
-          ),
-        ],
+            Text(
+              "مرحبا بك في نظّم",
+              style: TextStyle(
+                fontSize: 40,
+                fontFamily: 'Marhey',
+                height: 1,
+                color: Color.fromARGB(255, 146, 88, 0),
+              ),
+            ),
+            const SizedBox(height: 130),
+            const CircularProgressIndicator(
+              color: Colors.blue,
+            ),
+          ],
+        ),
       ),
-    ),
-    bottomNavigationBar: Container(
-      height: 50,
-      color: Color.fromARGB(173, 14, 54, 46),
-      
-    ),
-  );
-}
+      bottomNavigationBar: Container(
+        height: 50,
+        color: Color.fromARGB(173, 14, 54, 46),
+      ),
+    );
+  }
 }
