@@ -40,7 +40,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('تسجيل الدخول'),
+          backgroundColor: Color.fromARGB(173, 14, 54, 46), // Set the desired color here
+        
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -97,11 +99,11 @@ class _LoginState extends State<Login> {
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Please enter Password'),
                             MinLengthValidator(8, errorText: 'Password must be at least 8 characters'),
-                            PatternValidator(r'(?=.*?[#!@$%^&*-])', errorText: 'Password must contain at least one special character'),
+                            
                           ]),
                           decoration: InputDecoration(
-                            hintText: 'Password',
-                            labelText: 'Password',
+                            hintText: 'ادخل كلمة المرور',
+                            labelText: 'كلمة المرور',
                             prefixIcon: Icon(
                               Icons.key,
                               color: const Color.fromARGB(255, 59, 152, 63),
@@ -133,10 +135,10 @@ class _LoginState extends State<Login> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              primary: Colors.blue,
+                              primary: Color.fromARGB(173, 14, 54, 46),
                             ),
                             child: Text(
-                              'Login',
+                              'تسجيل الدخول',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
@@ -179,43 +181,39 @@ class _SplashState extends State<Splash> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image(
-              image: AssetImage('images/logo.png'),
-              height: 400,
-              width: 300,
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image(
+            image: AssetImage('images/logo.png'),
+            height: 250,
+            width: 200,
+          ),
+          Text(
+            "مرحبا بك في نظّم",
+            style: TextStyle(
+              fontSize: 40,
+              fontFamily: 'Marhey',
+              height: 1,
+              color: Color.fromARGB(255, 146, 88, 0),
             ),
-            Text(
-              "مرحبا بك في نظّم",
-              style: TextStyle(
-                fontSize: 40,
-                fontFamily: 'Marhey',
-                height: 1,
-                color: Color.fromARGB(255, 146, 88, 0),
-              ),
-            ),
-            const SizedBox(height: 130),
-            const CircularProgressIndicator(
-              color: Colors.blue,
-            ),
-            Container(
-              width: 500, // Width of the rectangle
-              height: 100, // Height of the rectangle
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 3, 45, 42), // Color of the rectangle
-                borderRadius: BorderRadius.circular(
-                    10), // Border radius to give rounded corners, if desired
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 130),
+          const CircularProgressIndicator(
+            color: Colors.blue,
+          ),
+        ],
       ),
-    );
-  }
+    ),
+    bottomNavigationBar: Container(
+      height: 50,
+      color: Color.fromARGB(173, 14, 54, 46),
+      
+    ),
+  );
+}
 }
