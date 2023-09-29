@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:nazam/home.dart';
+import 'package:nazam/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -11,7 +11,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: const Splash(),
     );
   }
 }
@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
   void navigateToHome() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => HomePage()),
+      MaterialPageRoute(builder: (context) => const HomePage()),
     );
   }
 
@@ -46,9 +46,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('تسجيل الدخول'),
+        title: const Text('تسجيل الدخول'),
         backgroundColor:
-            Color.fromARGB(173, 14, 54, 46), // Set the desired color here
+            const Color.fromARGB(173, 14, 54, 46), // Set the desired color here
 
         centerTitle: true,
       ),

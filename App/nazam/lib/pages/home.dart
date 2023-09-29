@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nazam/profile.dart';
-import 'package:nazam/viewIncident.dart';
+import 'package:nazam/pages/profile.dart';
+import 'package:nazam/pages/viewIncident.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
