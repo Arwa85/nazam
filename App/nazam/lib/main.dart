@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:nazam/pages/home.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   //Initialize Firebase:
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
