@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nazam/home.dart';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:nazam/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Splash(),
+      home: HomePage(),
     );
   }
 }
@@ -31,10 +30,15 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-
 class _LoginState extends State<Login> {
   Map userData = {};
   final _formkey = GlobalKey<FormState>();
+  void navigateToHome() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +60,15 @@ class _LoginState extends State<Login> {
                   height: 120,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 255, 255, 255)),
                   ),
                   child: Image.asset('images/logo.png'),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Form(
@@ -76,9 +81,10 @@ class _LoginState extends State<Login> {
                         child: TextFormField(
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Enter email address'),
-                            EmailValidator(errorText: 'Please enter a valid email'),
+                            EmailValidator(
+                                errorText: 'Please enter a valid email'),
                           ]),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'ادخل البريد الإلكتروني',
                             labelText: 'البريد الإكتروني',
                             prefixIcon: Icon(
@@ -88,7 +94,8 @@ class _LoginState extends State<Login> {
                             errorStyle: TextStyle(fontSize: 18.0),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.all(Radius.circular(9.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(9.0)),
                             ),
                           ),
                         ),
@@ -99,11 +106,11 @@ class _LoginState extends State<Login> {
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Please enter Password'),
                             MinLengthValidator(8, errorText: 'Password must be at least 8 characters'),
-                            
+                            PatternValidator(r'(?=.*?[#!@$%^&*-])', errorText: 'Password must contain at least one special character'),
                           ]),
                           decoration: InputDecoration(
-                            hintText: 'ادخل كلمة المرور',
-                            labelText: 'كلمة المرور',
+                            hintText: 'Password',
+                            labelText: 'Password',
                             prefixIcon: Icon(
                               Icons.key,
                               color: const Color.fromARGB(255, 59, 152, 63),
@@ -111,24 +118,25 @@ class _LoginState extends State<Login> {
                             errorStyle: TextStyle(fontSize: 18.0),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.all(Radius.circular(9.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(9.0)),
                             ),
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(180, 0, 0, 0),
-                        child: Text('Forget Password!'),
+                        margin: const EdgeInsets.fromLTRB(180, 0, 0, 0),
+                        child: const Text('Forget Password!'),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(28.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {
-                                print('form submitted');
+                                navigateToHome();
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -138,7 +146,7 @@ class _LoginState extends State<Login> {
                               primary: Color.fromARGB(173, 14, 54, 46),
                             ),
                             child: Text(
-                              'تسجيل الدخول',
+                              'Login',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
@@ -147,8 +155,6 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                     
-                      
                     ],
                   ),
                 ),
