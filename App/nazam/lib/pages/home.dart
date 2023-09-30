@@ -11,6 +11,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    _requestCameraPermission();
+  }
+
+  Future<void> _requestCameraPermission() async {
+    PermissionStatus cameraStatus = await Permission.camera.request();
+
+    if (cameraStatus == PermissionStatus.granted) {}
+    if (cameraStatus == PermissionStatus.denied) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("يوصى بقبول طلب الأذن بوصول للكاميرا")));
+    }
+
+    if (cameraStatus == PermissionStatus.permanentlyDenied) {
+      openAppSettings();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       color: Colors.black,
@@ -21,24 +41,7 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               alignment: Alignment.center,
               child: ElevatedButton(
-                  onPressed: () async {
-                    PermissionStatus cameraStatus =
-                        await Permission.camera.request();
-
-                    if (cameraStatus == PermissionStatus.granted) {
-                      print('hhhhhhhhhh');
-                    }
-                    if (cameraStatus == PermissionStatus.denied) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content:
-                              Text("يوصى بقبول طلب الأذن بوصول للكاميرا")));
-                    }
-
-                    if (cameraStatus == PermissionStatus.permanentlyDenied) {
-                      openAppSettings();
-                    }
-                  },
-                  child: const Text("start")),
+                  onPressed: () async {}, child: const Text("start")),
             ),
           )),
     );
