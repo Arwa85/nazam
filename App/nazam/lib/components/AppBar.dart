@@ -13,7 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: IconButton(
-        iconSize: 80.0,
+        iconSize: 120.0,
         icon: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -35,77 +35,80 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: const Color.fromRGBO(238, 235, 235, 1),
       toolbarHeight: 100,
       centerTitle: true,
-      leading: PopupMenuButton<String>(
-        position: PopupMenuPosition.under,
-        elevation: 8.0,
-        icon: const Icon(
-          Icons.menu,
-          size: 50.0,
-          color: Color.fromRGBO(43, 101, 109, 1),
+      leading: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: PopupMenuButton<String>(
+          position: PopupMenuPosition.under,
+          elevation: 8.0,
+          icon: const Icon(
+            Icons.menu,
+            size: 40.0,
+            color: Color.fromRGBO(43, 101, 109, 1),
+          ),
+          itemBuilder: (BuildContext context) {
+            TextDirection.rtl;
+            return [
+              PopupMenuItem<String>(
+                value: 'option1',
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Text(
+                    ('الابلاغ عن حادثة'),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+              PopupMenuItem<String>(
+                value: 'option2',
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Text(
+                    ('عرض الحوادث'),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+              PopupMenuItem<String>(
+                value: 'option3',
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Text(
+                    ('الاعدادات'),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+            ];
+          },
+          onSelected: (String value) {
+            // Handle menu item selection
+            if (value == 'option1') {
+            } else if (value == 'option2') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ViewIncidentPage(),
+                ),
+              );
+            } else if (value == 'option3') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ViewIncidentPage(),
+                ),
+              );
+            }
+          },
         ),
-        itemBuilder: (BuildContext context) {
-          TextDirection.rtl;
-          return [
-            PopupMenuItem<String>(
-              value: 'option1',
-              child: Container(
-                alignment: Alignment.centerRight,
-                child: const Text(
-                  ('الابلاغ عن حادثة'),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-            PopupMenuItem<String>(
-              value: 'option2',
-              child: Container(
-                alignment: Alignment.centerRight,
-                child: const Text(
-                  ('عرض الحوادث'),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-            PopupMenuItem<String>(
-              value: 'option3',
-              child: Container(
-                alignment: Alignment.centerRight,
-                child: const Text(
-                  ('الاعدادات'),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ];
-        },
-        onSelected: (String value) {
-          // Handle menu item selection
-          if (value == 'option1') {
-          } else if (value == 'option2') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ViewIncidentPage(),
-              ),
-            );
-          } else if (value == 'option3') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ViewIncidentPage(),
-              ),
-            );
-          }
-        },
       ),
       actions: [
         Padding(

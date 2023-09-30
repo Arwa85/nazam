@@ -35,15 +35,14 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       color: Colors.black,
       home: Scaffold(
-          appBar: const CustomAppBar(),
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Container(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                  onPressed: () async {}, child: const Text("start")),
-            ),
-          )),
+        appBar: const CustomAppBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            color: const Color.fromARGB(255, 167, 167, 167),
+          ),
+        ),
+      ),
     );
   }
 }
