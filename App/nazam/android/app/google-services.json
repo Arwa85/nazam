@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "253802052068",
+    "firebase_url": "https://nazam-4067b-default-rtdb.firebaseio.com",
+    "project_id": "nazam-4067b",
+    "storage_bucket": "nazam-4067b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253802052068:android:f5ecbadc2ca5a9222e6ff1",
+        "android_client_info": {
+          "package_name": "com.example.nazam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOOImzUFHsNZmkVV5HupoOH8sbczTncFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:nazam/pages/home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   //Initialize Firebase:
 
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
