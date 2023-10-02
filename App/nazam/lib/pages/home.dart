@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nazam/components/AppBar.dart';
+import 'package:nazam/components/appBar.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {

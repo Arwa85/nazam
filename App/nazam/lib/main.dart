@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:nazam/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   //* initialize Firebase
@@ -34,6 +34,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _emailController=TextEditingController();
+  final _passwordController=TextEditingController();
+
+  @override
+  void dispose() {
+    
+    super.dispose();
+  }
+
   Map userData = {};
   final _formkey = GlobalKey<FormState>();
   void navigateToHome() {
@@ -83,6 +92,7 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
+                          controller:_emailController ,
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Enter email address'),
                             EmailValidator(
@@ -107,6 +117,7 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
+                          controller: _passwordController,
                           validator: MultiValidator([
                             RequiredValidator(
                                 errorText: 'Please enter Password'),
