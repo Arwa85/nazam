@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       color: Colors.black,
       home: Scaffold(
-        appBar: const CustomAppBar(),
+        appBar: CustomAppBar(),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Container(
