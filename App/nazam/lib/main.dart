@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:nazam/pages/auth.dart';
 import 'package:nazam/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   //* initialize Firebase
@@ -37,10 +38,19 @@ class _LoginState extends State<Login> {
   final _emailController=TextEditingController();
   final _passwordController=TextEditingController();
 
+ Future singIn() async {
+  await FirebaseAuth.instance.signInWithEmailAndPassword
+  (email: _emailController.text.trim(),password: _passwordController.text.trim(),);
+
+ }
+
+
   @override
   void dispose() {
-    
     super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+
   }
 
   Map userData = {};
@@ -56,10 +66,10 @@ class _LoginState extends State<Login> {
 
   //* Handle Password Reset
   Future<void> _resetPassword() async {
-    String email = emailController
-        .text; // Assume emailController is the TextEditingController for the email TextFormField.
+   // String email = emailController
+     //   .text; // Assume emailController is the TextEditingController for the email TextFormField.
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+     // await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
               'تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني الخاص بك!')));
@@ -109,6 +119,7 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
+                          controller: _emailController,
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Enter email address'),
                             EmailValidator(
@@ -134,16 +145,7 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
                           controller: _passwordController,
-                          validator: MultiValidator([
-                            RequiredValidator(
-                                errorText: 'Please enter Password'),
-                            MinLengthValidator(8,
-                                errorText:
-                                    'Password must be at least 8 characters'),
-                            PatternValidator(r'(?=.*?[#!@$%^&*-])',
-                                errorText:
-                                    'Password must contain at least one special character'),
-                          ]),
+                        
                           decoration: const InputDecoration(
                             hintText: 'Password',
                             labelText: 'Password',
@@ -185,26 +187,29 @@ class _LoginState extends State<Login> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(28.0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_formkey.currentState!.validate()) {
-                                navigateToHome();
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                        child: GestureDetector(
+                          onTap: singIn,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formkey.currentState!.validate()) {
+                                  navigateToHome();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                primary: Color.fromARGB(173, 14, 54, 46),
                               ),
-                              primary: Color.fromARGB(173, 14, 54, 46),
-                            ),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
                               ),
                             ),
                           ),
