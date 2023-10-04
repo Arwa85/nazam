@@ -1,57 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:nazam/pages/home.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
-
+class LoginScreen extends StatefulWidget {
   @override
-  State<Login> createState() => _LoginState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  Future singIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-  }
-
-  Map userData = {};
-  TextEditingController emailController = TextEditingController();
-  final _formkey = GlobalKey<FormState>();
-
-  void navigateToHome() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const HomePage()),
-    );
-  }
+  bool _isLoading = false;
 
   //* Handle Password Reset
   Future<void> _resetPassword() async {
-    // String email = emailController
-    //   .text; // Assume emailController is the TextEditingController for the email TextFormField.
-    try {
-      // await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              'تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني الخاص بك!')));
-    } catch (e) {
+    String email = _emailController.text.trim();
+    if (email.isNotEmpty) {
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني الخاص بك!',
+            ),
+          ),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('فشل في إرسال بريد إعادة تعيين كلمة المرور.'),
+          ),
+        );
+      }
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('الرجاء إدخال عنوان البريد الإلكتروني')));
+        SnackBar(
+          content: Text('الرجاء إدخال عنوان البريد الإلكتروني.'),
+        ),
+      );
     }
   }
 
@@ -59,145 +48,101 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('تسجيل الدخول'),
-        backgroundColor:
-            const Color.fromARGB(173, 14, 54, 46), // Set the desired color here
-
+        title: Text('تسجيل دخول'),
+        backgroundColor: const Color.fromARGB(173, 14, 54, 46),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              child: Center(
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    border: Border.all(
-                        color: const Color.fromARGB(255, 255, 255, 255)),
-                  ),
-                  child: Image.asset('images/logo.png'),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+               
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'البريد الالكتروني',
+                ),
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Email is required'),
+                  EmailValidator(errorText: 'Invalid email format'),
+                ]),
+              ),
+              SizedBox(height: 16.0),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'كلمة المرور',
+                ),
+                obscureText: true,
+                validator: RequiredValidator(errorText: 'Password is required'),
+              ),
+              SizedBox(height: 16.0),
+                 TextButton(
+                onPressed: _isLoading ? null : _resetPassword,
+                child: Text(
+                  'هل نسيت كلمة المرور؟',
+                  style: TextStyle(color: Color.fromARGB(255, 55, 145, 248)),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Form(
-                  key: _formkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: TextFormField(
-                          controller: _emailController,
-                          validator: MultiValidator([
-                            RequiredValidator(errorText: 'Enter email address'),
-                            EmailValidator(
-                                errorText: 'Please enter a valid email'),
-                          ]),
-                          decoration: const InputDecoration(
-                            hintText: 'ادخل البريد الإلكتروني',
-                            labelText: 'البريد الإكتروني',
-                            prefixIcon: Icon(
-                              Icons.email,
-                              //color: Colors.green,
-                            ),
-                            errorStyle: TextStyle(fontSize: 18.0),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(9.0)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: TextFormField(
-                          controller: _passwordController,
-                          decoration: const InputDecoration(
-                            hintText: 'Password',
-                            labelText: 'Password',
-                            prefixIcon: Icon(
-                              Icons.key,
-                              color: Color.fromARGB(255, 59, 152, 63),
-                            ),
-                            errorStyle: TextStyle(fontSize: 18.0),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(9.0)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            _resetPassword();
-                          },
-                          style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5)),
-                          child: const Text(
-                            'نسيت كلمة المرور؟',
-                            style: TextStyle(
-                              color: Color.fromRGBO(43, 101, 109, 1),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1,
-                              decoration: TextDecoration.underline,
-                            ),
-                            textAlign: TextAlign.right,
-                            textDirection: TextDirection.rtl,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(28.0),
-                        child: GestureDetector(
-                          onTap: singIn,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formkey.currentState!.validate()) {
-                                  navigateToHome();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                primary: Color.fromARGB(173, 14, 54, 46),
-                              ),
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+              ElevatedButton(
+                onPressed: _isLoading ? null : _login,
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(173, 14, 54, 46),
+                  minimumSize: Size(double.infinity, 40),
+                  
                 ),
+                child: _isLoading
+                    ? CircularProgressIndicator()
+                    : Text('تسجيل دخول'
+                    ,style: TextStyle(fontSize: 20),
+                    
+                    ),
               ),
-            ),
-          ],
+              
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+        // Login successful, navigate to home screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } on FirebaseAuthException catch (e) {
+        String errorMessage = 'An error occurred, please try again later';
+
+        if (e.code == 'user-not-found') {
+          errorMessage = 'No user found for that email';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'Wrong password provided';
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 }
