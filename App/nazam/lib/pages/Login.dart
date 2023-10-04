@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:nazam/pages/home.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,13 +12,47 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  Future singIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
   Map userData = {};
+  TextEditingController emailController = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+
   void navigateToHome() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const HomePage()),
     );
+  }
+
+  //* Handle Password Reset
+  Future<void> _resetPassword() async {
+    // String email = emailController
+    //   .text; // Assume emailController is the TextEditingController for the email TextFormField.
+    try {
+      // await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              'تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني الخاص بك!')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('الرجاء إدخال عنوان البريد الإلكتروني')));
+    }
   }
 
   @override
@@ -60,6 +95,7 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
+                          controller: _emailController,
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Enter email address'),
                             EmailValidator(
@@ -84,22 +120,13 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
-                          validator: MultiValidator([
-                            RequiredValidator(
-                                errorText: 'Please enter Password'),
-                            MinLengthValidator(8,
-                                errorText:
-                                    'Password must be at least 8 characters'),
-                            PatternValidator(r'(?=.*?[#!@$%^&*-])',
-                                errorText:
-                                    'Password must contain at least one special character'),
-                          ]),
-                          decoration: InputDecoration(
+                          controller: _passwordController,
+                          decoration: const InputDecoration(
                             hintText: 'Password',
                             labelText: 'Password',
                             prefixIcon: Icon(
                               Icons.key,
-                              color: const Color.fromARGB(255, 59, 152, 63),
+                              color: Color.fromARGB(255, 59, 152, 63),
                             ),
                             errorStyle: TextStyle(fontSize: 18.0),
                             border: OutlineInputBorder(
@@ -110,32 +137,54 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(180, 0, 0, 0),
-                        child: const Text('Forget Password!'),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            _resetPassword();
+                          },
+                          style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5)),
+                          child: const Text(
+                            'نسيت كلمة المرور؟',
+                            style: TextStyle(
+                              color: Color.fromRGBO(43, 101, 109, 1),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1,
+                              decoration: TextDecoration.underline,
+                            ),
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(28.0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_formkey.currentState!.validate()) {
-                                navigateToHome();
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                        child: GestureDetector(
+                          onTap: singIn,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formkey.currentState!.validate()) {
+                                  navigateToHome();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                primary: Color.fromARGB(173, 14, 54, 46),
                               ),
-                              primary: Color.fromARGB(173, 14, 54, 46),
-                            ),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
                               ),
                             ),
                           ),

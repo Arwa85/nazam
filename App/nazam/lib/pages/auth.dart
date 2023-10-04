@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nazam/main.dart';
+import 'package:nazam/pages/Login.dart';
 import 'package:nazam/pages/home.dart';
+
 
 class Auth extends StatelessWidget {
   const Auth({Key? key});
