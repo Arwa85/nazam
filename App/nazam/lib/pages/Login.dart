@@ -55,7 +55,14 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         
-        child: Form(
+        child: Column(
+          children: [
+            Image.asset(
+              'images/logo.png', 
+              width: 170,
+              height: 200,
+            ),
+        Form(
           key: _formKey,
           child: Column(
             children: [
@@ -99,16 +106,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     : Text('تسجيل دخول'
                     ,style: TextStyle(fontSize: 20),
                     
-                    ),
+                    ), 
+                  ),
+                ],
               ),
-              
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
-
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -128,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(builder: (context) => HomePage()),
         );
       } on FirebaseAuthException catch (e) {
-        String errorMessage = 'An error occurred, please try again later';
+        String errorMessage = 'خطأ في البريد الاكتروني او كلمة المرور, الرجاء المحاولة مرة اخرى';
 
         if (e.code == 'user-not-found') {
           errorMessage = 'No user found for that email';
