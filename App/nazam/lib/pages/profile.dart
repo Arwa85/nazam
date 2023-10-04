@@ -2,12 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazam/components/AppBar.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({super.key});
+
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
 
   @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
         appBar: CustomAppBar(),
         body: Directionality(
