@@ -1,13 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nazam/components/AppBar.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({super.key});
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
 
   @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final user = FirebaseAuth.instance.currentUser!; //save the current user's information
+
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
         appBar: CustomAppBar(),
         body: Directionality(
@@ -32,7 +39,7 @@ class Profile extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text('البريد الإلكتروني'),
-                    subtitle: Text('example@example.com'),
+                    subtitle: Text(user.email!,),
                     leading: Icon(CupertinoIcons.mail),
                     tileColor: Colors.white,
                   ),
