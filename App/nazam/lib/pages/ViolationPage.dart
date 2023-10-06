@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nazam/pages/home.dart';
 
 import '/components/AppBar.dart';
  
@@ -85,7 +86,7 @@ try{
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 40.0), // Add this line
+                  padding: EdgeInsets.only(top: 40.0), 
                   child: Align(
                     alignment: Alignment.topRight,
                     child: SizedBox(
@@ -95,11 +96,11 @@ try{
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderRadius: BorderRadius.circular(10.0),  
                             borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderRadius: BorderRadius.circular(10.0),  
                             borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -123,18 +124,18 @@ try{
                       controller: idNumberController,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                          borderRadius: BorderRadius.circular(10.0),  
                           borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                          borderRadius: BorderRadius.circular(10.0), 
                           borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                         ),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
 
                         label: Text("الرقم الجامعي",style:   TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Color(0xFF00676F)),),
 
-                        // hintText: '-',
+                        
                       ),
                     ),
                   ),
@@ -142,7 +143,7 @@ try{
                 SizedBox(
                   height: 15,
                 ), SizedBox(
-                  height: 20,  //زيادة المسافة هنا
+                  height: 20,  
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,25 +154,25 @@ try{
                         controller: dateController,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderRadius: BorderRadius.circular(10.0), 
                             borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderRadius: BorderRadius.circular(10.0),  
                             borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
 
                           label: Text( "تاريخ المخالفة",style:   TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color:Color(0xFF00676F)),),
 
-                          // hintText: '-',
+                         
                         ),
                       ),
                     ),
                     SizedBox(
                       width: 20.0,
                     ), SizedBox(
-                      height: 40,  // زيادة المسافة هنا
+                      height: 40,  
                     ),
                     Flexible(
                       child: TextField(
@@ -179,11 +180,11 @@ try{
                         controller: timeController,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderRadius: BorderRadius.circular(10.0), 
                             borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderRadius: BorderRadius.circular(10.0), 
                             borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -211,12 +212,12 @@ try{
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           label: Text(" الوصف",style:   TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Color(0xFF00676F)), ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
-                            borderSide: BorderSide(color: Color(0xFF00676F), width: 3.0),  // هذا يحدد لون الحدود وسماكتها
+                            borderRadius: BorderRadius.circular(10.0), 
+                            borderSide: BorderSide(color: Color(0xFF00676F), width: 3.0),  
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
-                            borderSide: BorderSide(color: Color(0xFF00676F), width: 3.0),  // هذا يحدد لون الحدود وسماكتها
+                            borderRadius: BorderRadius.circular(10.0),  
+                            borderSide: BorderSide(color: Color(0xFF00676F), width: 3.0),  
                           ),
                         ),
                       ),
@@ -285,16 +286,16 @@ try{
                   children: [
                     Flexible(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 144, maxHeight: 80),  // حدد العرض الأقصى هنا
+                        constraints: BoxConstraints(maxWidth: 144, maxHeight: 80),  
                         child: TextField(
                           controller: writtenByController,
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: "الاسم",
                             // hintText: 'ميعاد العقيل',
-                            labelStyle: TextStyle(fontSize: 20),  // تغيير حجم النص هنا
+                            labelStyle: TextStyle(fontSize: 20),  
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(40.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                              borderRadius: BorderRadius.circular(40.0),  
                             ),
                           ),
                         ),
@@ -306,14 +307,14 @@ try{
 
                     Flexible(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 140, maxHeight: 80),  // حدد العرض الأقصى هنا
+                        constraints: BoxConstraints(maxWidth: 140, maxHeight: 80),  
                         child: TextField(
                           controller: writtenIdController,
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: "الرقم الجامعي",
                             // hintText: '441003773',
-                            labelStyle: TextStyle(fontSize: 20),  // تغيير حجم النص هنا
+                            labelStyle: TextStyle(fontSize: 20),  
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(40.0),
                             ),
@@ -339,13 +340,12 @@ try{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-            IconButton(
-              onPressed: () {
-
-
-              },
-              icon: Icon(Icons.arrow_back),
-            ),
+           IconButton(
+  onPressed: () {
+    Navigator.pop(context); 
+  },
+  icon: Icon(Icons.arrow_back),
+),
             SizedBox(width:50),
             ElevatedButton(
               onPressed: () {
@@ -361,7 +361,7 @@ try{
                             side: BorderSide(color: Color(0xFF00676F)),
                           ),
                           onPressed: () {
-                            // هنا يمكنك وضع كود الأكشن الذي يجب أن يحدث عند الضغط على "نعم"
+                            
                             Navigator.of(context).pop();
                           },
                         ),
@@ -371,7 +371,7 @@ try{
                             side: BorderSide(color: Color(0xFF00676F)),
                           ),
                           onPressed: () {
-                            // هنا يمكنك وضع كود الأكشن الذي يجب أن يحدث عند الضغط على "لا"
+                           
                             Navigator.of(context).pop();
                           },
                         ),
@@ -389,7 +389,7 @@ try{
                 });
                 if(name.isEmpty){
                   const snackBar = SnackBar(
-                    content: Text('Error enter name!'),
+                    content: Text('ادخل الاسم!!'),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -397,7 +397,7 @@ try{
                 }
                 if(idNumber.isEmpty){
                   const snackBar = SnackBar(
-                    content: Text('Error enter id number!'),
+                    content: Text('ادخل الرقم الجامعي!!'),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -407,7 +407,7 @@ try{
                 }
                 if(violationDate.isEmpty){
                   const snackBar = SnackBar(
-                    content: Text('Error enter violation date!'),
+                    content: Text('ادخل تاريخ المخالفة!!'),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -417,7 +417,7 @@ try{
                 }
                 if(violationTime.isEmpty){
                   const snackBar = SnackBar(
-                    content: Text('Error enter violation time!'),
+                    content: Text('ادخل وقت المخالفة!!'),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -427,7 +427,7 @@ try{
                 }
                 if(description.isEmpty){
                   const snackBar = SnackBar(
-                    content: Text('Error enter violation description!'),
+                    content: Text('ادخل وصف المخالفة!!'),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -436,7 +436,7 @@ try{
                 }
                 if(violationKind.isEmpty){
                   const snackBar = SnackBar(
-                    content: Text('Error choose violation kind!'),
+                    content: Text('اختر نوع المخالفة!!'),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
