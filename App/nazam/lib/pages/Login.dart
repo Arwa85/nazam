@@ -71,7 +71,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'البريد الالكتروني',
+                  prefixIcon: Icon(
+                                Icons.email,
+                                //color: Colors.green,
+                              ),
+
                 ),
+                
                 validator: MultiValidator([
                   RequiredValidator(errorText: 'Email is required'),
                   EmailValidator(errorText: 'Invalid email format'),
@@ -81,6 +87,10 @@ class _LoginScreenState extends State<LoginScreen> {
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(
+                                Icons.key,
+                                color: Color.fromARGB(255, 59, 152, 63),
+                              ),
                   labelText: 'كلمة المرور',
                 ),
                 obscureText: true,

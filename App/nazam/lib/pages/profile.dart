@@ -11,7 +11,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final user = FirebaseAuth.instance.currentUser!; //save the current user's information
+  final user = FirebaseAuth.instance.currentUser!;
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                     title: Text('البريد الإلكتروني'),
-                    subtitle: Text(user.email!,),
+                    subtitle: Text(user.email!),
                     leading: Icon(CupertinoIcons.mail),
                     tileColor: Colors.white,
                   ),
