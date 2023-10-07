@@ -2,41 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:nazam/pages/home.dart';
 import 'package:nazam/pages/profile.dart';
 import 'package:nazam/pages/viewIncident.dart';
+import 'package:nazam/pages/IncidentPage.dart';
+import '../pages/ViolationPage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar
+
+  ({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(100);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: IconButton(
-        iconSize: 120.0,
-        icon: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('images/logo.png'),
+    return  AppBar(
+
+      title: Row(
+
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+            iconSize: 100.0,
+            icon: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('images/logo.png'),
+                ),
+              ),
             ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              );
+            },
           ),
-        ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
-        },
+        ],
       ),
+
       elevation: 1.5,
+      automaticallyImplyLeading: true,
       backgroundColor: const Color.fromRGBO(238, 235, 235, 1),
       toolbarHeight: 100,
       centerTitle: true,
       leading: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(2.0),
         child: PopupMenuButton<String>(
           position: PopupMenuPosition.under,
           elevation: 8.0,
@@ -92,6 +105,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           onSelected: (String value) {
             // Handle menu item selection
             if (value == 'option1') {
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => incidentPage(),
+                ),
+              );
             } else if (value == 'option2') {
               Navigator.push(
                 context,
@@ -120,6 +139,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                 child: IconButton(
                   icon: const Icon(
+                    Icons.send,
+                    size: 25.0,
+                    color: Color.fromRGBO(43, 101, 109, 1),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>   ViolationPage(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                child: IconButton(
+                  icon: const Icon(
                     Icons.message_rounded,
                     size: 35.0,
                     color: Color.fromRGBO(43, 101, 109, 1),
@@ -128,7 +165,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Profile(),
+                        builder: (context) =>   Profile(),
                       ),
                     );
                   },
