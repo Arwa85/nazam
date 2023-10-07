@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nazam/pages/home.dart';
 
 import '/components/AppBar.dart';
+
  
 
 class ViolationPage extends StatefulWidget {
@@ -52,17 +53,41 @@ try{
     'السلوك العدواني او التهديد',
   ];
   void getCurrentUser() async{
-    final User? user =  firebaseAuth.currentUser;
-    final uid = user?.uid.toString();
-    print("=========================================");
-    print ( user!.email.toString());
-    print (  uid!);
-    setState(() {
-      writtenByController.text= user!.email.toString();
-      wriiteByName= user!.email.toString();
-      writtenIdController.text=uid!;
-      writtenIdNumber=uid!;
-    });
+
+    try {
+      final User? user =await  firebaseAuth.currentUser;
+      final uid = await user?.uid.toString();
+      print("=========================================");
+      print(user!.email.toString());
+      print(uid!);
+
+
+
+
+      FirebaseFirestore.instance
+          .collection('Users')
+          .get()
+          .then((value) {
+        value.docs.forEach((element) {
+          print(element.id);
+          print(element['name']);
+         if( element.id== uid){
+           setState(() {
+             writtenByController.text = element['name'];
+             wriiteByName =element['name'];
+             writtenIdController.text = uid!;
+             writtenIdNumber = uid!;
+           });
+         }
+        });
+      });
+
+
+      print("=========================================");
+
+    }catch( e){
+      print(e);
+    }
 
   }
   @override
@@ -342,7 +367,9 @@ try{
 
            IconButton(
   onPressed: () {
-    Navigator.pop(context); 
+    Navigator.pop(context);
+
+
   },
   icon: Icon(Icons.arrow_back),
 ),
