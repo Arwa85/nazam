@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nazam/pages/home.dart';
 import 'package:nazam/pages/profile.dart';
 import 'package:nazam/pages/viewIncident.dart';
-
+import 'package:nazam/pages/IncidentPage.dart';
 import '../pages/ViolationPage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -105,6 +105,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           onSelected: (String value) {
             // Handle menu item selection
             if (value == 'option1') {
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => incidentPage(),
+                ),
+              );
             } else if (value == 'option2') {
               Navigator.push(
                 context,
