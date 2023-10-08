@@ -4,19 +4,45 @@ import 'package:gradient_colored_slider/gradient_colored_slider.dart';
 import '/components/AppBar.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class incidentPage extends StatefulWidget {
-  const incidentPage({Key?key}):super(key: key);
+  //const incidentPage({Key?key}):super(key: key);
   @override
   _incidentPageState createState() => _incidentPageState();
   
 }
 class _incidentPageState extends State<incidentPage> {
-  final _formKey = GlobalKey<FormState>();
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseAuth firebaseAuth=FirebaseAuth.instance;
+
+void addIncident(String incidentType,String location,String date,String time,String riskLevel,String description ,String writtenByName,String writtenIdNumber ) async{
+try{
+  await firestore.collection('incident').doc().set({
+    'incidentType': incidentType,
+    'location': location,
+    'date': date,
+    'time': time,
+    'riskLevel': riskLevel,
+    'description': description,
+    'writtenByName': writtenByName,
+    'writtenIdNumber': writtenIdNumber,
+  });
+}catch(e){
+
+}
+
+   }
+
+final _formKey = GlobalKey<FormState>();
 final List<String> incidentTypes = ['سرقة', 'اختراق أمني', 'إصابة طالب', 'تسرب كيميائي','عطل كهربائي','تفعيل إنذار الحريق'];
-String? selectedincidentType;
+String? selectedIncidentType;
+String? customIncidentType;
 TextEditingController otherIncidentTypeController = TextEditingController();
 double sliderValue = 0.5;
+
 
 File? image ;
 File? videoFile;
@@ -43,11 +69,55 @@ videoFile = videoTemporary;
       images.add(File(pickedImage.path));
     });
   }
+ 
 
+  String incidentType="", location="", date="", time="", riskLevel="", description ="", wriiteByName="", writtenIdNumber="";
+  TextEditingController locationController=  TextEditingController();
+  TextEditingController dateController=  TextEditingController();
+  TextEditingController timeController=  TextEditingController();
+  TextEditingController riskLevelController=  TextEditingController();
+  TextEditingController descriptionController=  TextEditingController();
+  TextEditingController writtenByController=  TextEditingController();
+  TextEditingController writtenIdController=  TextEditingController();
+void getCurrentUser() async{
+      try {
+      final User? user =await  firebaseAuth.currentUser;
+      final uid = await user?.uid.toString();
+      print("=========================================");
+      print(user!.email.toString());
+      print(uid!);
+      FirebaseFirestore.instance
+          .collection('Users')
+          .get()
+          .then((value) {
+        value.docs.forEach((element) {
+          print(element.id);
+          print(element['name']);
+         if( element.id== uid){
+           setState(() {
+             writtenByController.text = element['name'];
+             wriiteByName =element['name'];
+             writtenIdController.text = uid;
+             writtenIdNumber = uid;
+           });
+         }
+        });
+      });
+
+
+      print("=========================================");
+
+    }catch( e){
+      print(e);
+    }
+
+  }
 @override
 void dispose() {
-otherIncidentTypeController.dispose();
-super.dispose();
+  super.dispose();
+  otherIncidentTypeController.dispose();
+  getCurrentUser();
+
 }
 
   @override
@@ -64,6 +134,60 @@ super.dispose();
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
+              Container(
+  width: 1000,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10.0),
+    border: Border.all(color: Color(0xFF00676F), width: 3.0),
+  ),
+  child: DropdownButton<String>(
+    isExpanded: true,
+    style: TextStyle(color: Color(0xFF00676F), fontSize: 16),
+    value: selectedIncidentType,
+    elevation: 16,
+    underline: DropdownButtonHideUnderline(
+      child: Container(),
+    ),
+    onChanged: (String? newValue) {
+      setState(() {
+        if (newValue == 'اخرى') {
+          selectedIncidentType = newValue;
+          customIncidentType = '';
+        } else {
+          selectedIncidentType = newValue;
+        }
+      });
+    },
+    items: [
+      ...incidentTypes.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      DropdownMenuItem<String>(
+        value: 'اخرى',
+        child: Text('اخرى'),
+      ),
+    ],
+  ),
+),
+if (selectedIncidentType == 'اخرى')
+  TextFormField(
+    onChanged: (value) {
+      setState(() {
+        customIncidentType = value;
+      });
+    },
+    decoration: InputDecoration(
+      labelText: 'نوع الحادث المخصص',
+    ),
+  ),
+                          SizedBox(height: 25),
+                         
+                          
+                          //////////////////////////////////////////////////////////////////////////////
+                          /*
               DropdownButtonFormField<String>(
                 value: selectedincidentType,
                 onChanged: (newValue) {
@@ -76,6 +200,8 @@ super.dispose();
                         value: type,
                         child: Text(type),
                       )),
+
+
                   DropdownMenuItem<String>(
                      alignment: Alignment.centerRight,
                     value: 'Other',
@@ -132,8 +258,9 @@ super.dispose();
                 SizedBox(height: 25),
               if (selectedincidentType != 'Other')
                 SizedBox(height: 0),
-              
+              */
 TextFormField(
+  controller: locationController,
   decoration: InputDecoration(
     border: OutlineInputBorder(),
 enabledBorder: OutlineInputBorder(
@@ -161,6 +288,7 @@ enabledBorder: OutlineInputBorder(
                 children: [
                   Expanded(
                     child: TextFormField(
+                      controller: timeController,
                      decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
@@ -178,6 +306,7 @@ enabledBorder: OutlineInputBorder(
                 SizedBox(width: 15,),
                   Expanded(
                     child: TextFormField(
+                      controller: dateController,
              decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
@@ -228,6 +357,7 @@ Row(
                 
               ),
             ),
+            
             if(images.isNotEmpty)
 Container(
 width: 170,
@@ -286,6 +416,7 @@ child: ListView(
       child: Container(
         height: 220,
         child: TextFormField(
+          controller: descriptionController,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -311,9 +442,11 @@ child: ListView(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
+                  
                   width: 210,
                   child:GradientColoredSlider(
                   value: sliderValue,
+                  
                   onChanged: (value) {
                 setState(() {
                   sliderValue = value;
@@ -321,6 +454,7 @@ child: ListView(
               },
              ),
                 ),
+                
                 Expanded(
                    child: Text(' مستوى الخطورة',
                     style: TextStyle(
@@ -348,22 +482,90 @@ child: ListView(
                     ),
                 ]
                 ),
-              SizedBox(height: 90),
+              SizedBox(height: 10),
               Row(
                 children: [
-                 ElevatedButton(
-                  onPressed: (){},
-                  style: ElevatedButton.styleFrom(primary: Color.fromARGB(255, 255, 255, 255)),
-                  child:Text("<",
+                  GestureDetector(
+              onTap: () {
+                //
+              },
+              
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.arrow_back,
+                    size: 25,
+                    color:Color(0xFF2B656D),
+                  ),
+                
+                ],
+                
+              ),
+            ),
+                  
+
+                    SizedBox(width: 60,),
+                  Expanded(
+                    child: ElevatedButton(
+                  onPressed: (){
+                     showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('هل أنت متأكد من إرسال الحادث؟'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('نعم'),
+                          style: TextButton.styleFrom(
+                            side: BorderSide(color: Color(0xFF00676F)),
+                          ),
+                          onPressed: () {
+                            
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: Text('لا'),
+                          style: TextButton.styleFrom(
+                            side: BorderSide(color: Color(0xFF00676F)),
+                          ),
+                          onPressed: () {
+                           
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+                    setState(() {
+                  location= locationController.text .trim() ;
+                  date=dateController.text.trim();
+                  time=timeController.text.trim();
+                  riskLevel=riskLevelController.text.trim();
+                   description=descriptionController.text.trim() ;
+                   wriiteByName=writtenByController.text.trim() ;
+                   writtenIdNumber=writtenIdController.text.trim() ;
+                });
+                
+                addIncident(incidentType, location, date, time, riskLevel, description , wriiteByName, writtenIdNumber );
+                  },
+                  style: ElevatedButton.styleFrom(primary: Color(0xFF00676F),
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),),
+                  child:Text("إبلاغ عن الحادث",
                   style: TextStyle(
-                    color: Color(0xFF2B656D),
+                    color: Color.fromARGB(255, 255, 255, 255),
                     fontWeight: FontWeight.bold,
-                    fontSize: 35.0,
+                    fontSize: 15.0,
                     ),
                   )
                   )
-                ],
-              ),
+                    ),  
+                ]
+                ),
 ],
 ),
 ),
