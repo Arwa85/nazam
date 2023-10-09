@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
+
 class incidentPage extends StatefulWidget {
   //const incidentPage({Key?key}):super(key: key);
   @override
@@ -41,7 +42,10 @@ final List<String> incidentTypes = ['سرقة', 'اختراق أمني', 'إصا
 String? selectedIncidentType;
 String? customIncidentType;
 TextEditingController otherIncidentTypeController = TextEditingController();
-double sliderValue = 0.5;
+int sliderValue = 1;
+static const _TOP_SLIDER_MAX_STEP = 5;
+  int _intValue = 0;
+  double _topSliderValue = 0.3;
 
 
 File? image ;
@@ -69,7 +73,10 @@ videoFile = videoTemporary;
       images.add(File(pickedImage.path));
     });
   }
- 
+ int _rangedSelectedValue(int maxSteps, double value) {
+    double stepRange = 1.0 / maxSteps;
+    return (value / stepRange + 1).clamp(1, maxSteps).toInt();
+  }
 
   String incidentType="", location="", date="", time="", riskLevel="", description ="", wriiteByName="", writtenIdNumber="";
   TextEditingController locationController=  TextEditingController();
@@ -180,85 +187,11 @@ if (selectedIncidentType == 'اخرى')
       });
     },
     decoration: InputDecoration(
-      labelText: 'نوع الحادث المخصص',
+      labelText: 'نوع الحادث الجديد',
     ),
   ),
                           SizedBox(height: 25),
-                         
-                          
-                          //////////////////////////////////////////////////////////////////////////////
-                          /*
-              DropdownButtonFormField<String>(
-                value: selectedincidentType,
-                onChanged: (newValue) {
-                  setState(() {
-                    selectedincidentType = newValue;
-                  });},
-                items: [
-                  ...incidentTypes.map((type) => DropdownMenuItem<String>(
-                        alignment: Alignment.centerRight,
-                        value: type,
-                        child: Text(type),
-                      )),
-
-
-                  DropdownMenuItem<String>(
-                     alignment: Alignment.centerRight,
-                    value: 'Other',
-                    child: Text('أخرى'),
-                  ),
-                ],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
-                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
-                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          label: Text(" نوع الحادث"),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار نوع الحادث';
-                  }
-                  if (value == 'Other' && otherIncidentTypeController.text.isEmpty) {
-                    return 'يرجى إدخال نوع الحادث الجديد';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 25),
-              if (selectedincidentType == 'Other')
-                TextFormField(
-                  controller: otherIncidentTypeController,
-                  decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
-                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
-                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          label: Text(" نوع الحادث"),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'يرجى إدخال نوع الحادث الجديد';
-                    }
-                    return null;
-                  },
-                ),
-              if (selectedincidentType == 'Other')  
-                SizedBox(height: 25),
-              if (selectedincidentType != 'Other')
-                SizedBox(height: 0),
-              */
+  
 TextFormField(
   controller: locationController,
   decoration: InputDecoration(
@@ -436,31 +369,34 @@ child: ListView(
     ),
   ],
 ),
-
-              SizedBox(height: 50,),
+            
+              SizedBox(height: 30,),
               Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  
-                  width: 210,
-                  child:GradientColoredSlider(
-                  value: sliderValue,
-                  
-                  onChanged: (value) {
-                setState(() {
-                  sliderValue = value;
-                });
-              },
-             ),
-                ),
-                
+               Container(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              height: 40,
+              width: 220,
+              child: GradientColoredSlider(
+                value: _topSliderValue,
+                barWidth: 8,
+                barSpace: 4,
+                onChanged: (double value) {
+                  setState(() {
+                    _topSliderValue = value;
+                    _intValue = _rangedSelectedValue(_TOP_SLIDER_MAX_STEP, _topSliderValue);
+                  });
+                },
+              ),
+            ),
+           SizedBox(width: 10,),
                 Expanded(
                    child: Text(' مستوى الخطورة',
                     style: TextStyle(
                       color: Color(0xFF2B656D),
                     fontWeight: FontWeight.bold,
-                    fontSize: 21.0,
+                    fontSize: 20.0,
                     fontFamily: 'Arial',
                     ),
                     ),
@@ -471,7 +407,7 @@ child: ListView(
               Row(
                 children: [
                   Expanded(
-                    child: Text('     1         2         3         4         5',
+                    child: Text('        1         2         3         4         5',
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                     fontWeight: FontWeight.normal,
@@ -505,10 +441,10 @@ child: ListView(
             ),
                   
 
-                    SizedBox(width: 60,),
+                  SizedBox(width: 60,),
                   Expanded(
                     child: ElevatedButton(
-                  onPressed: (){
+                    onPressed: (){
                      showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -543,10 +479,11 @@ child: ListView(
                   location= locationController.text .trim() ;
                   date=dateController.text.trim();
                   time=timeController.text.trim();
-                  riskLevel=riskLevelController.text.trim();
                    description=descriptionController.text.trim() ;
                    wriiteByName=writtenByController.text.trim() ;
                    writtenIdNumber=writtenIdController.text.trim() ;
+                   riskLevel=_intValue.toString();
+                   incidentType =selectedIncidentType.toString();
                 });
                 
                 addIncident(incidentType, location, date, time, riskLevel, description , wriiteByName, writtenIdNumber );
@@ -573,3 +510,97 @@ child: ListView(
 );
 }
 }
+
+
+
+
+/* Slider(
+              value: sliderValue.toDouble(),
+              min: 1,
+              max: 5,
+              onChanged: (value) {
+                setState(() {
+                  sliderValue = value.toInt();
+                  
+                });
+              },
+              divisions: 4,
+              label: sliderValue.toString(),
+            ),
+ */
+
+                       
+                          
+                          //////////////////////////////////////////////////////////////////////////////
+                          /*
+              DropdownButtonFormField<String>(
+                value: selectedincidentType,
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedincidentType = newValue;
+                  });},
+                items: [
+                  ...incidentTypes.map((type) => DropdownMenuItem<String>(
+                        alignment: Alignment.centerRight,
+                        value: type,
+                        child: Text(type),
+                      )),
+
+
+                  DropdownMenuItem<String>(
+                     alignment: Alignment.centerRight,
+                    value: 'Other',
+                    child: Text('أخرى'),
+                  ),
+                ],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
+                          ),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          label: Text(" نوع الحادث"),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى اختيار نوع الحادث';
+                  }
+                  if (value == 'Other' && otherIncidentTypeController.text.isEmpty) {
+                    return 'يرجى إدخال نوع الحادث الجديد';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 25),
+              if (selectedincidentType == 'Other')
+                TextFormField(
+                  controller: otherIncidentTypeController,
+                  decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),  // هنا يمكنك تعديل القيمة حسب الحاجة
+                            borderSide: BorderSide(width: 3, color: Color(0xFF00676F)),
+                          ),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          label: Text(" نوع الحادث"),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى إدخال نوع الحادث الجديد';
+                    }
+                    return null;
+                  },
+                ),
+              if (selectedincidentType == 'Other')  
+                SizedBox(height: 25),
+              if (selectedincidentType != 'Other')
+                SizedBox(height: 0),
+              */
