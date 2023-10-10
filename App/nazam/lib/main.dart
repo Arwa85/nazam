@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nazam/pages/Login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:camera/camera.dart';
 
+List<CameraDescription>? cameras;
 
 void main() async {
   //* initialize Firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp( MyApp());
+  cameras = await availableCameras();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,8 +27,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 class Splash extends StatefulWidget {
   const Splash({super.key});

@@ -1,6 +1,10 @@
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nazam/components/appBar.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +14,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isWorking = false;
+  CameraController? cameraController;
+  FaceDetector? faceDetector;
+  Size? size;
+  List<Face>? facesList;
+  CameraDescription? description;
+  CameraLensDirection cameraLensDirection = CameraLensDirection.front;
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       color: Colors.black,
       home: Scaffold(
         appBar: CustomAppBar(),
