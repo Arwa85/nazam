@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nazam/pages/Login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:camera/camera.dart';
 
-List<CameraDescription>? cameras;
+
 
 void main() async {
   //* initialize Firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  cameras = await availableCameras();
   runApp(const MyApp());
 }
 
